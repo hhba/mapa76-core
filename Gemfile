@@ -3,10 +3,10 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in mapa76-core.gemspec
 gemspec
 
-group :development do
-  gem "rake"
-  gem "turn"
+gem "rake"
 
+group :development do
+  gem "turn"
   gem "guard"
   gem "guard-minitest"
   gem "rb-inotify", :require => false
