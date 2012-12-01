@@ -2,9 +2,13 @@ ENV["APP_ENV"] = "test"
 require File.expand_path("../../config/boot", __FILE__)
 
 require "test/unit"
-require "turn/autorun"
 require "factory_girl"
 require "database_cleaner"
+
+begin
+  require "turn/autorun"
+rescue LoadError
+end
 
 class Test::Unit::TestCase
   include FactoryGirl::Syntax::Methods

@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "mongoid", "~> 3.0.14"
 
+  gem.add_development_dependency "minitest"
   gem.add_development_dependency "database_cleaner"
   gem.add_development_dependency "factory_girl"
 end
