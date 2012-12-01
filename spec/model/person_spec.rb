@@ -2,37 +2,6 @@
 require "spec_helper"
 
 describe Person do
-  describe "populate people" do
-    before do
-      patty1  = create :named_entity, text: "Luis Abelardo Patty"
-      patty2  = create :named_entity, text: "Luis Ableardo Patty"
-      videla1 = create :named_entity, text: "Jorge Rafael Videla"
-
-      @document = create :document
-      @duplicates = [[patty1, patty2], [videla1]]
-    end
-
-    it "should add one person per group of duplicates" do
-      Person.populate @document, @duplicates
-
-      assert_equal 2, Person.count
-      assert_equal 2, Person.first.named_entities.count
-    end
-    
-    it "should not create a new person if it's already stored" do
-      create :person, name: "Eduardo Massera", tags: ['procesados', 'condenados', 'condenados']
-      named_entity = create :named_entity, text: "Eduardo Massera"
-      duplicates = [[named_entity]]
-
-      Person.populate @document, duplicates
-      assert_equal 1, Person.count
-      assert_equal named_entity, Person.first.named_entities.first
-    end
-
-    it "should search for all the posibilities when verifying it's not already in the database"
-    # Maybe it can use the method Add
-  end
-
   describe "add new person" do
     before do
       @p1 = create :person, name: "Luciano Benjamín MenÉndez", tags: ['procesados']
@@ -50,29 +19,6 @@ describe Person do
     end
   end
 
-  describe "Person finders" do
-    before do
-      @p1 = create :person, name: "Cocó Fuente"
-      @p2 = create :person, name: "Coco Fontana"
-      @p3 = create :person, name: "Capital Federal"
-    end
-
-    it "should do something that makes silvanis happy" do
-      name = "Juan Péréz"
-      name_t = "juan perez"
-      p = create :person, name: name
-
-      person = Person.where(name: name).first
-      assert_equal(p.id, person.id, "This should be the same person")
-
-      person = Person.filter_by_name(name_t).first
-      assert_equal(name, person.name, "Person.filter_by_name(#{name_t})")
-
-      cocos = Person.filter_by_name("coc", true).all
-      assert_equal(2, cocos.length)
-    end
-  end
-
   describe "Blacklist" do
     before do
       @person = create :person, name: "Policia Federal"
@@ -80,7 +26,7 @@ describe Person do
     end
 
     it "should not find the user once it was marked as blacklist" do
-      assert_raise Mongoid::Errors::DocumentNotFound do
+      assert_raises(Mongoid::Errors::DocumentNotFound) do
         Person.find(@person.id)
       end
     end
