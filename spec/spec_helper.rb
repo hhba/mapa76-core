@@ -1,6 +1,11 @@
-ENV["APP_ENV"] = "test"
-require File.expand_path("../../config/boot", __FILE__)
+require "rubygems" unless defined?(Gem)
+require "bundler/setup"
 
+require "mapa76/core"
+Mongoid.load!("spec/mongoid.yml", :test)
+
+
+# Test dependencies
 require "minitest/spec"
 require "minitest/autorun"
 
@@ -13,7 +18,7 @@ require "factory_girl"
 require "database_cleaner"
 
 
-class Test::Unit::TestCase
+class MiniTest::Unit::TestCase
   include FactoryGirl::Syntax::Methods
 
   FactoryGirl.find_definitions
@@ -23,6 +28,7 @@ class Test::Unit::TestCase
     DatabaseCleaner.clean
   end
 end
+
 
 def data_path(filename)
   File.expand_path(File.join(File.dirname(__FILE__), "data", filename))
