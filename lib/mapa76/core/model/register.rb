@@ -1,5 +1,3 @@
-require "mongoid/references"
-
 class Register
   include Mongoid::Document
   include Mongoid::Timestamps

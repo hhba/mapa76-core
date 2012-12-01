@@ -1,11 +1,10 @@
-APP_ROOT = File.join(File.dirname(__FILE__), "..") + "/"
-
-$LOAD_PATH.unshift(APP_ROOT)
+#APP_ROOT = File.join(File.dirname(__FILE__), "..") + "/"
+#$LOAD_PATH.unshift(APP_ROOT)
 
 require "rubygems" unless defined?(Gem)
 require "bundler/setup"
 
-require "mongoid"
+require "mapa76/core"
 Mongoid.load!("config/mongoid.yml", :test)
 
 #require "config/logger"
