@@ -1,4 +1,4 @@
-# Mapa76::Core #
+# Mapa76::Core [![Build Status](https://secure.travis-ci.org/hhba/mapa76-core.png?branch=master)](https://travis-ci.org/hhba/mapa76-core) #
 
 Core models and libs of the [Mapa76 project](http://mapa76.info/) (in spanish).
 
