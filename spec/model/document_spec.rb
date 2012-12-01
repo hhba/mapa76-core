@@ -1,8 +1,8 @@
 require "spec_helper"
 
-class TestDocument < Test::Unit::TestCase
-  context "Export to CSV" do
-    setup do
+describe Document do
+  describe "export to CSV" do
+    before do
       @document = create :document
       @person1 = create :person
       @person2 = create :person
@@ -23,12 +23,11 @@ class TestDocument < Test::Unit::TestCase
       }
     end
 
-    should "generate CSV with all the people" do
+    it "should generate CSV with all the people" do
       assert_respond_to @document, :to_csv
       assert_instance_of String, @document.to_csv
     end
 
-    should "Export registers as CSV"
+    it "should export registers as CSV"
   end
 end
-
