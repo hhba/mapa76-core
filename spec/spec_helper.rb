@@ -28,8 +28,3 @@ class MiniTest::Unit::TestCase
     DatabaseCleaner.clean
   end
 end
-
-
-def data_path(filename)
-  File.expand_path(File.join(File.dirname(__FILE__), "data", filename))
-end
