@@ -1,29 +1,23 @@
-# Mapa76::Core
+# Mapa76::Core #
 
-TODO: Write a gem description
+Core models and libs of the [Mapa76 project](http://mapa76.info/) (in spanish).
 
-## Installation
+This is used by the [webapp](https://github.com/hhba/mapa76-webapp) and the
+[processing pipeline](https://github.com/hhba/mapa76).
 
-Add this line to your application's Gemfile:
+## Testing ##
 
-    gem 'mapa76-core'
+### Prerequisites ###
 
-And then execute:
+  * MongoDB server
 
-    $ bundle
+### Running the tests ###
 
-Or install it yourself as:
+   $ bundle exec rake test
 
-    $ gem install mapa76-core
+You can also use Guard for autotesting:
 
-## Usage
+   $ bundle exec guard
 
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Any changes made to the models or a lib will be detected by Guard and it will
+run its associated test.
