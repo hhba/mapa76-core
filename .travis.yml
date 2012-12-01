@@ -3,4 +3,4 @@ rvm:
   - "1.9.3"
 services:
   - mongodb
-bundler_args: --without development
+bundler_args: --without extra

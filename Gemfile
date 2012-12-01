@@ -5,7 +5,7 @@ gemspec
 
 gem "rake"
 
-group :development do
+group :extra do
   gem "turn"
   gem "guard"
   gem "guard-minitest"
