@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Mapa76::Core::VERSION
   gem.authors       = ["Marcos Vanetta", "Damián Silvani"]
   gem.email         = ["marcosvanetta@gmail.com", "dsilvani@gmail.com"]
+  gem.summary       = %q{The core classes of Mapa76}
   gem.description   = %q{Models and classes shared by the Mapa76 webapp
                          and the processing pipeline}
-  gem.summary       = %q{TODO}
   gem.homepage      = "https://github.com/hhba/mapa76-core"
 
   gem.files         = `git ls-files`.split($/)
