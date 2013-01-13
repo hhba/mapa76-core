@@ -17,6 +17,8 @@ class Document
   field :state,            type: Symbol, default: :waiting
   field :percentage,       type: Integer, default: 0
 
+  belongs_to :project
+
   has_many :pages
   has_many :fact_registers
   has_many :named_entities
