@@ -1,4 +1,6 @@
 require "mongoid"
+require "mongoid/pagination"
+require "tire"
 require "active_support/inflections"
 
 Dir["#{File.dirname(__FILE__)}/model/*.rb"].each do |model_path|
