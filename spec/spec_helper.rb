@@ -2,7 +2,13 @@ require "rubygems" unless defined?(Gem)
 require "bundler/setup"
 
 require "mapa76/core"
+
+# Configure Mongoid
 Mongoid.load!("spec/mongoid.yml", :test)
+
+# Configure Resque
+resque_config = YAML.load_file("spec/resque.yml")
+Resque.redis  = resque_config[:test]
 
 
 # Test dependencies
