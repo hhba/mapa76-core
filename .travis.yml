@@ -4,4 +4,5 @@ rvm:
 services:
   - mongodb
   - elasticsearch
+  - redis-server
 bundler_args: --without extra
