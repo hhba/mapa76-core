@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "mongoid-pagination"
   gem.add_dependency "tire"
   gem.add_dependency "yajl-ruby"
+  gem.add_dependency "resque"
 
   gem.add_development_dependency "minitest"
   gem.add_development_dependency "database_cleaner"
