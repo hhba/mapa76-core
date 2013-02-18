@@ -88,8 +88,7 @@ class Document
 
 protected
   def enqueue_process
-    # TODO Create empty class NormalizationTask
-    #Resque.enqueue(NormalizationTask, id)
-    return true
+    logger.info "Enqueue processing task for document with id #{id}"
+    Resque.enqueue(DocumentProcessBootstrapTask, id)
   end
 end
