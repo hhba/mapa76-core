@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "mongoid", "~> 3.0.14"
   gem.add_dependency "mongoid-pagination"
+  gem.add_dependency "mongoid-grid_fs"
   gem.add_dependency "tire"
   gem.add_dependency "yajl-ruby"
   gem.add_dependency "resque"
