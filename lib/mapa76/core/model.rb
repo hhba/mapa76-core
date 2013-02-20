@@ -1,5 +1,6 @@
 require "mongoid"
 require "mongoid/pagination"
+require "mongoid-grid_fs"
 require "tire"
 require "active_support/inflections"
 
