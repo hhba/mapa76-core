@@ -4,19 +4,20 @@ class Document
   include Mongoid::Pagination
   include Finder
 
-  field :title,            type: String
-  field :heading,          type: String
-  field :category,         type: String
-  field :published_at,     type: Date
-  field :description,      type: String
-  field :original_file,    type: String
-  field :thumbnail_file,   type: String
-  field :information,      type: Hash
-  field :fontspecs,        type: Hash, default: {}
-  field :last_analysis_at, type: Time
-  field :processed_text,   type: String
-  field :state,            type: Symbol, default: :waiting
-  field :percentage,       type: Integer, default: 0
+  field :title,             type: String
+  field :heading,           type: String
+  field :category,          type: String
+  field :published_at,      type: Date
+  field :description,       type: String
+  field :original_filename, type: String
+  field :information,       type: Hash
+  field :fontspecs,         type: Hash, default: {}
+  field :last_analysis_at,  type: Time
+  field :processed_text,    type: String
+  field :state,             type: Symbol, default: :waiting
+  field :percentage,        type: Integer, default: 0
+  field :file_id,           type: Moped::BSON::ObjectId
+  field :thumbnail_file_id, type: Moped::BSON::ObjectId
 
   belongs_to :project
 
@@ -25,7 +26,8 @@ class Document
   has_many :named_entities
   has_and_belongs_to_many :people, index: true
 
-  validates_presence_of :original_file
+  validates_presence_of :file_id
+  validates_presence_of :original_filename
 
   after_create :enqueue_process
 
@@ -53,6 +55,30 @@ class Document
     fields.to_json
   end
 
+
+  def file
+    if file_id
+      Mongoid::GridFS.namespace_for(:documents).get(file_id)
+    end
+  end
+
+  def file=(file_or_path)
+    fs = Mongoid::GridFS.namespace_for(:documents).put(file_or_path)
+    self.file_id = fs.id
+    fs
+  end
+
+  def thumbnail_file
+    if thumbnail_file_id
+      Mongoid::GridFS.namespace_for(:thumbnails).get(thumbnail_file_id)
+    end
+  end
+
+  def thumbnail_file=(file_or_path)
+    fs = Mongoid::GridFS.namespace_for(:thumbnails).put(file_or_path)
+    self.thumbnail_file_id = fs.id
+    fs
+  end
 
   def context
     {

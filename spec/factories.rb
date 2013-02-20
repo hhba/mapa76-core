@@ -1,6 +1,12 @@
 # encoding: utf-8
 
 FactoryGirl.define do
+  factory :document do
+    sequence(:title) { |n| "text_#{ n }" }
+    sequence(:original_filename) { |n| "text_#{ n }" }
+    file { StringIO.new("empty content") }
+  end
+
   factory :named_entity do
     sequence(:text) { |n| "text_#{ n }" }
     sequence(:lemma) { |n| "text_#{ n }" }
@@ -9,11 +15,6 @@ FactoryGirl.define do
 
   factory :person do
     sequence(:name) { |n| "name_#{ n }" }
-  end
-
-  factory :document do
-    sequence(:title) { |n| "text_#{ n }" }
-    sequence(:original_file) { |n| "text_#{ n }" }
   end
 
   factory :name_entity, class: NamedEntity do
