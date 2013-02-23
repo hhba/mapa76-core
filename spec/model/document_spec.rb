@@ -14,6 +14,22 @@ describe Document do
     end
   end
 
+  describe "after_destroy" do
+    it "should destroy #file and #thumbnail_file" do
+      @document.file = StringIO.new("document")
+      @document.thumbnail_file = StringIO.new("thumbnail")
+
+      @document.destroy
+
+      assert_raises(Mongoid::Errors::DocumentNotFound) do
+        assert @document.file
+      end
+      assert_raises(Mongoid::Errors::DocumentNotFound) do
+        assert @document.thumbnail_file
+      end
+    end
+  end
+
   describe "validation" do
     it "should have a `file_id` defined" do
       @document.file_id = nil

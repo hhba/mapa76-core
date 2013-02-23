@@ -29,7 +29,8 @@ class Document
   validates_presence_of :file_id
   validates_presence_of :original_filename
 
-  after_create :enqueue_process
+  after_create  :enqueue_process
+  after_destroy :destroy_gridfs_files
 
 
   include Tire::Model::Search
@@ -116,5 +117,10 @@ protected
   def enqueue_process
     logger.info "Enqueue processing task for document with id #{id}"
     Resque.enqueue(DocumentProcessBootstrapTask, id)
+  end
+
+  def destroy_gridfs_files
+    file.destroy
+    thumbnail_file.destroy
   end
 end
