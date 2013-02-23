@@ -7,9 +7,8 @@ describe Document do
 
   describe "after_save" do
     it "should enqueue process bootstrap task" do
-      skip "need Mocha"
       document = build :document
-      Resque.expects(:enqueue).with(DocumentProcessBootstrapTask)
+      Resque.expects(:enqueue).with(DocumentProcessBootstrapTask, document.id)
       assert document.save
     end
   end
