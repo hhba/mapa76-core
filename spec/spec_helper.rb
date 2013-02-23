@@ -14,6 +14,7 @@ Resque.redis  = resque_config["test"]
 # Test dependencies
 require "minitest/spec"
 require "minitest/autorun"
+require "mocha/setup"
 
 begin
   require "turn/autorun"
