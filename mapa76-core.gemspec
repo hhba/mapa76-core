@@ -22,10 +22,11 @@ Gem::Specification.new do |gem|
   gem.add_dependency "mongoid-pagination"
   gem.add_dependency "mongoid-grid_fs"
   gem.add_dependency "tire"
-  gem.add_dependency "yajl-ruby"
   gem.add_dependency "resque"
+  gem.add_dependency "yajl-ruby"
 
   gem.add_development_dependency "minitest"
   gem.add_development_dependency "database_cleaner"
   gem.add_development_dependency "factory_girl"
+  gem.add_development_dependency "mocha"
 end
