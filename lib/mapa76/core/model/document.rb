@@ -30,6 +30,7 @@ class Document
   validates_presence_of :file_id
   validates_presence_of :original_filename
 
+  before_save   :set_default_title
   after_create  :enqueue_process
   after_destroy :destroy_gridfs_files
 
@@ -104,6 +105,12 @@ class Document
   end
 
 protected
+  def set_default_title
+    if self.title.blank?
+      self.title = self.original_filename
+    end
+  end
+
   def enqueue_process
     logger.info "Enqueue processing task for document with id #{id}"
     Resque.enqueue(DocumentProcessBootstrapTask, id)
