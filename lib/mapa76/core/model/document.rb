@@ -4,7 +4,7 @@ class Document
   include Mongoid::Pagination
   include Finder
 
-  field :title,             type: String
+  field :title,             type: String, default: lambda { original_filename }
   field :category,          type: String
   field :published_at,      type: Date
   field :description,       type: String
