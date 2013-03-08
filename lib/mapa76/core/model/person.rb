@@ -54,7 +54,7 @@ class Person
   end
 
   def metainfo
-    docs = self.documents.map { |doc| {id: doc._id, name: doc.heading }}
+    docs = self.documents.map { |doc| {id: doc._id, name: doc.title }}
     {"_id" => _id, "created_at" => created_at, :documents => docs, :full_name => full_name, :tags => tags}
   end
 
