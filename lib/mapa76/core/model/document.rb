@@ -5,10 +5,10 @@ class Document
   include Finder
 
   field :title,             type: String
-  field :heading,           type: String
   field :category,          type: String
   field :published_at,      type: Date
   field :description,       type: String
+  field :original_title,    type: String
   field :original_filename, type: String
   field :information,       type: Hash
   field :fontspecs,         type: Hash, default: {}
@@ -30,6 +30,7 @@ class Document
   validates_presence_of :file_id
   validates_presence_of :original_filename
 
+  before_save   :set_default_title
   after_create  :enqueue_process
   after_destroy :destroy_gridfs_files
 
@@ -40,16 +41,16 @@ class Document
 
   tire do
     mapping do
-      indexes :title,   analyzer: "snowball", boost: 100
-      indexes :heading, analyzer: "snowball", boost: 100
-      indexes :pages,   analyzer: "snowball"
+      indexes :title,          analyzer: "snowball", boost: 100
+      indexes :original_title, analyzer: "snowball", boost: 90
+      indexes :pages,          analyzer: "snowball"
     end
   end
 
   def to_indexed_json
     fields = {
       title: title,
-      heading: heading,
+      original_title: original_title,
       pages: {},
     }
     pages.each do |page|
@@ -104,6 +105,12 @@ class Document
   end
 
 protected
+  def set_default_title
+    if self.title.blank?
+      self.title = self.original_filename
+    end
+  end
+
   def enqueue_process
     logger.info "Enqueue processing task for document with id #{id}"
     Resque.enqueue(DocumentProcessBootstrapTask, id)
