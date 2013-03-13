@@ -117,7 +117,7 @@ protected
   end
 
   def destroy_gridfs_files
-    file.destroy
-    thumbnail_file.destroy
+    file.destroy if file
+    thumbnail_file.destroy if thumbnail_file
   end
 end
