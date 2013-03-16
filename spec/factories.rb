@@ -56,4 +56,8 @@ FactoryGirl.define do
   factory :fact_register do
     document
   end
+
+  factory :project do
+    sequence(:name) {|n| "project_#{n}" }
+  end
 end
