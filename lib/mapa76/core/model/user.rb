@@ -7,7 +7,7 @@ class User
 
   validates_presence_of :email
   validates_presence_of :encrypted_password
-  
+
   ## Recoverable
   field :reset_password_token,   :type => String
   field :reset_password_sent_at, :type => Time
@@ -36,6 +36,7 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
 
+  has_many :documents
   has_and_belongs_to_many :projects
 
   def username

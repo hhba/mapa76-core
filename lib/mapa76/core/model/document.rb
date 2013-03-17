@@ -21,6 +21,7 @@ class Document
   field :thumbnail_file_id, type: Moped::BSON::ObjectId
 
   belongs_to :project
+  belongs_to :user
 
   has_many :pages
   has_many :fact_registers
@@ -35,7 +36,7 @@ class Document
   after_destroy :destroy_gridfs_files
 
   scope :public, -> { where(public: true) }
-  scope :private_for, ->(user){ where(:user_ids.in => [user.id], :public => false) }
+  scope :private_for, ->(user){ where(:user_id => user.id, :public => false) }
   scope :without, ->(documents){ not_in(id: documents.map(&:id)) }
 
   include Tire::Model::Search
