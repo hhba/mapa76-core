@@ -47,6 +47,7 @@ class Document
       indexes :title,          analyzer: "snowball", boost: 100
       indexes :original_title, analyzer: "snowball", boost: 90
       indexes :pages,          analyzer: "snowball"
+      indexes :user_id,        index: :not_analyzed
     end
   end
 
@@ -55,6 +56,7 @@ class Document
       title: title,
       original_title: original_title,
       pages: {},
+      user_id: user_id,
     }
     pages.each do |page|
       fields[:pages][page.num] = page.text.gsub(/<[^<]+?>/, "")
