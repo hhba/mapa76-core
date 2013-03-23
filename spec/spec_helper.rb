@@ -10,6 +10,9 @@ Mongoid.load!("spec/mongoid.yml", :test)
 resque_config = YAML.load_file("spec/resque.yml")
 Resque.redis  = resque_config["test"]
 
+# Configure Tire
+es_config = YAML.load_file("spec/elasticsearch.yml")
+Tire::Model::Search.index_prefix es_config["test"]["index_prefix"]
 
 # Test dependencies
 require "minitest/spec"
@@ -33,5 +36,7 @@ class MiniTest::Unit::TestCase
   def setup
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean
+
+    Document.tire.index.delete
   end
 end
