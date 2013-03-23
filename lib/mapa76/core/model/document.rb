@@ -20,13 +20,13 @@ class Document
   field :file_id,           type: Moped::BSON::ObjectId
   field :thumbnail_file_id, type: Moped::BSON::ObjectId
 
-  belongs_to :project
   belongs_to :user
 
   has_many :pages
   has_many :fact_registers
   has_many :named_entities
   has_and_belongs_to_many :people, index: true
+  has_and_belongs_to_many :project
 
   validates_presence_of :file_id
   validates_presence_of :original_filename
@@ -37,7 +37,7 @@ class Document
 
   scope :public, -> { where(public: true) }
   scope :private_for, ->(user){ where(:user_id => user.id, :public => false) }
-  scope :without, ->(documents){ not_in(id: documents.map(&:id)) }
+  scope :without, ->(documents){ not_in(_id: documents.map(&:id)) }
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
