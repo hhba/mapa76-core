@@ -83,4 +83,59 @@ describe Document do
       assert_equal "thumbnail", @document.thumbnail_file.data
     end
   end
+
+  describe "ElasticSearch indexing" do
+    before do
+      # Wait for ES to index document...
+      sleep 1
+    end
+
+    it "should add to index when creating new document" do
+      search = Document.tire.search("*")
+      assert_equal 1, search.count
+      assert_equal @document.id.to_s, search.results.first.id
+
+      search = Document.tire.search(@document.title)
+      assert_equal 1, search.count
+      assert_equal @document.id.to_s, search.results.first.id
+    end
+
+    it "should update index if document is modified" do
+      @document.update_attributes(title: "New Title")
+      sleep 1
+
+      search = Document.tire.search(@document.title)
+      assert_equal 1, search.count
+      assert_equal @document.id.to_s, search.results.first.id
+    end
+
+    it "should update index if document is modified" do
+      @document.update_attributes(title: "New Title")
+      sleep 1
+
+      search = Document.tire.search(@document.title)
+      assert_equal 1, search.count
+      assert_equal @document.id.to_s, search.results.first.id
+    end
+
+    it "should delete from index if document is destroyed" do
+      @document.destroy
+      sleep 1
+
+      search = Document.tire.search("*")
+      assert search.count.zero?
+    end
+
+    it "should update index if a page is modified" do
+      text_line = TextLine.new(text: @document.processed_text)
+      @document.pages << Page.new(num: 1, text_lines: [text_line])
+
+      @document.save
+      sleep 1
+
+      search = Document.tire.search("empty")
+      assert_equal 1, search.count
+      assert_equal @document.id.to_s, search.results.first.id
+    end
+  end
 end
