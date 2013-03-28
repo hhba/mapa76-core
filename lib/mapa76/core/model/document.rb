@@ -57,6 +57,7 @@ class Document
       original_title: original_title,
       pages: {},
       user_id: user_id,
+      project_ids: project_ids,
     }
     pages.each do |page|
       fields[:pages][page.num] = page.text.gsub(/<[^<]+?>/, "")
