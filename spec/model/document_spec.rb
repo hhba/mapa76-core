@@ -9,7 +9,8 @@ describe Document do
     it "should enqueue process bootstrap task" do
       document = build :document
       Resque.expects(:enqueue).with(DocumentProcessBootstrapTask, document.id)
-      assert document.save
+      document.save
+      document.enqueue_process
     end
   end
 
