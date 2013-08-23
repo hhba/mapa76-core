@@ -28,7 +28,7 @@ private
       csv << keys
       finders.each do |finder|
         self.public_send(finder).only(*keys).each do |ne|
-          csv << keys.map { |k| ne.public_send(k) }
+          csv << keys.map { |k| ne.respond_to?(k) ? ne.public_send(k) : nil }
         end
       end
     end
