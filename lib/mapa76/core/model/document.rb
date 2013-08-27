@@ -111,6 +111,10 @@ class Document
     percentage == 100
   end
 
+  def failed?
+    id and failed_ids.include?(id.to_s)
+  end
+
 protected
   def set_default_title
     if self.title.blank?
@@ -126,5 +130,19 @@ protected
   def destroy_gridfs_files
     file.destroy if file
     thumbnail_file.destroy if thumbnail_file
+  end
+
+  def failed_ids(opts={})
+    self.failed_jobs(opts).map do |job|
+      job['payload']['args'].first
+    end.compact
+  end
+
+  def failed_jobs(opts={})
+    opts.reverse_merge!({
+      :offset => 0,
+      :limit => Resque::Failure.count
+    })
+    jobs = [Resque::Failure.all(opts[:offset], opts[:limit])].flatten.compact
   end
 end
