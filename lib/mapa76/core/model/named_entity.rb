@@ -43,7 +43,9 @@ class NamedEntity < Citation
   end
 
   def page_num
-    Page.where(:_id => self.inner_pos["from"]["pid"]).only(:num).first.try(:num)
+    if self.inner_pos
+      Page.where(:_id => self.inner_pos["from"]["pid"]).only(:num).first.try(:num)
+    end
   end
 
   def href
