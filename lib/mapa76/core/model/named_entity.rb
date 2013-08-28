@@ -47,8 +47,8 @@ class NamedEntity < Citation
   end
 
   def href
-    # NOTE Implemented in mapa76-webapp
-    nil
+    # NOTE Doubly-sorry
+    "http://mapa76.info/documents/#{document_id}/comb##{page_num}"
   end
 
 
