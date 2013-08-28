@@ -11,6 +11,7 @@ class Document
   field :description,       type: String
   field :original_title,    type: String
   field :original_filename, type: String
+  field :context_cache,     type: Hash, default: {}
   field :information,       type: Hash
   field :fontspecs,         type: Hash, default: {}
   field :last_analysis_at,  type: Time
@@ -115,7 +116,35 @@ class Document
     id and failed_ids.include?(id.to_s)
   end
 
+  # opt[:force] = true
+  def context(opt = {})
+    if opt[:force] || context_cache == {}
+      self.context_cache = context_generator
+      save
+    end
+    self.context_cache
+  end
+
 protected
+
+  def context_generator
+    ctx = {
+      :id => id,
+      :title => title,
+      :registers => self.fact_registers.map(&:to_hash),
+      :people => self.people.map { |person| { id: person.id, name: person.full_name, mentions: person.mentions_in(self) } },
+      :dates => self.dates_found.group_by(&:text).map { |k, v| { text: k, mentions: v.size} },
+      :organizations => self.organizations_found.group_by(&:text).map { |k, v| { text: k, mentions: v.size} },
+      :places => (self.places_found + self.addresses_found).group_by(&:text).map { |k, v| { text: k, mentions: v.size} }
+    }
+
+    [:registers, :people, :dates, :organizations, :places].each do |f|
+      ctx[:"has_#{f}"] = !ctx[f].empty?
+    end
+
+    ctx
+  end
+
   def set_default_title
     if self.title.blank?
       self.title = self.original_filename
