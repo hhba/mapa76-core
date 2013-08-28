@@ -46,6 +46,11 @@ class NamedEntity < Citation
     Page.where(:_id => self.inner_pos["from"]["pid"]).only(:num).first.try(:num)
   end
 
+  def href
+    # NOTE Implemented in mapa76-webapp
+    nil
+  end
+
 
 protected
   def human_form
