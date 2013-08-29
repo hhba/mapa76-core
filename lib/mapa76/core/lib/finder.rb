@@ -16,7 +16,7 @@ module Finder
   end
 
   def addresses_found
-    Citation.where(:ne_class => :addresses, document_id: self.id).count
+    Citation.where(:ne_class => :addresses, document_id: self.id)
   end
 
   def time_setter
