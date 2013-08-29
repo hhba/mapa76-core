@@ -28,8 +28,8 @@ class NamedEntity < Citation
     text || human_form || super
   end
 
-  def context(length=70)
-    text = self.document.processed_text
+  def context(length=70, text=nil)
+    text ||= self.document.processed_text
 
     # Calculate "start" and "end"
     context_start = self.pos - length
