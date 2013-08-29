@@ -16,7 +16,7 @@ module Finder
   end
 
   def addresses_found
-    self.named_entities.where(:ne_class => :addresses)
+    Citation.where(:ne_class => :addresses, document_id: self.id).count
   end
 
   def time_setter
@@ -27,3 +27,5 @@ module Finder
     dates_found.select { |dated_entity| dated_entity.string_date? }.map { |dated_entity| dated_entity.to_time_setter }
   end
 end
+
+
