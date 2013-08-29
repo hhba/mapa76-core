@@ -2,7 +2,6 @@ class Document
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Pagination
-  include DocumentExporter
   include Finder
 
   field :title,             type: String
